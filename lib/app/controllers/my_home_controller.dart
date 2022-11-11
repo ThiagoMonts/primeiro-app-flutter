@@ -1,11 +1,16 @@
+import 'package:untitled/app/mappers/artigo_mapper.dart';
+import 'package:untitled/app/repositories/repository.dart';
+
 import '../models/artigo_model.dart';
 
 class MyHomeController {
+  final repository = Repository();
+  final mapper = ArtigoMapper();
   List<ArtigoModel> artigoList = [];
 
-  MyHomeController() {
-  final list = List.generate(10, (index) => ArtigoModel('Título $index', 'Autor $index'));
-  artigoList = list;
+  Future<List<ArtigoModel>> initData() async {
+    final list = await repository.getData();
+    final artigoList = mapper.convert(list);
+    return artigoList;
   }
-
 }

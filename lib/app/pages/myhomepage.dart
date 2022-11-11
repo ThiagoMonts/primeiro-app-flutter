@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/app/controllers/my_home_controller.dart';
+import 'package:untitled/app/models/artigo_model.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -23,14 +24,23 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
 
-        child: ListView.builder(
-          itemCount: controller.artigoList.length,
-          itemBuilder: (context, index) {
-          final model = controller.artigoList[index];
-          return ListTile(
-          title: Text(model.titulo),
-          );
-        },),
+        child: FutureBuilder<List<ArtigoModel>>(
+          future: controller.initData(),
+          builder: (context, snapshot) {
+
+            if(!snapshot.hasData) {
+              return CircularProgressIndicator();
+            }
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+              final model = snapshot.data![index];
+              return ListTile(
+              title: Text(model.titulo),
+              );
+            },);
+          }
+        ),
     ));
   }
 }

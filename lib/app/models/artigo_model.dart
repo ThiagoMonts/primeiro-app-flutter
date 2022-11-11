@@ -1,6 +1,6 @@
 class ArtigoModel {
   final String titulo;
-  final String autor;
+  final String descricao;
 
-  ArtigoModel(this.titulo, this.autor);
+  ArtigoModel(this.titulo, this.descricao);
 }
